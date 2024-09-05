@@ -5,10 +5,7 @@ name: "Release Binary"
 on:
   push:
     tags:
-    - '**'
-
-# Test Locally with:
-# goreleaser build --skip-validate --snapshot --clean
+      - "**"
 
 jobs:
   goreleaser:
@@ -20,9 +17,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-go@v2
+      - uses: actions/setup-go@v3
         with:
-          go-version: '1.21'
+          go-version: "1.21"
 
       - name: Clean up dist directory
         run: rm -rf dist

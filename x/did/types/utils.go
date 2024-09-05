@@ -10,8 +10,8 @@ import (
 	"github.com/btcsuite/btcd/btcec/v2"
 )
 
-// ComputePublicKey computes the public key of a child key given the extended public key, chain code, and index.
-func ComputePublicKey(extPubKey []byte, chainCode uint32, index int) ([]byte, error) {
+// ComputeAccountPublicKey computes the public key of a child key given the extended public key, chain code, and index.
+func ComputeAccountPublicKey(extPubKey []byte, chainCode uint32, index int) ([]byte, error) {
 	// Check if the index is a hardened child key
 	if chainCode&0x80000000 != 0 && index < 0 {
 		return nil, errors.New("invalid index")

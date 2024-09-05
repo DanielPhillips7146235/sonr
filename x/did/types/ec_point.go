@@ -11,7 +11,7 @@ import (
 
 // VerifySignature verifies the signature of a message
 func VerifySignature(key []byte, msg []byte, sig []byte) bool {
-	pp, err := BuildEcPoint(key)
+	pp, err := buildEcPoint(key)
 	if err != nil {
 		return false
 	}
@@ -29,7 +29,7 @@ func VerifySignature(key []byte, msg []byte, sig []byte) bool {
 }
 
 // BuildEcPoint builds an elliptic curve point from a compressed byte slice
-func BuildEcPoint(pubKey []byte) (*curves.EcPoint, error) {
+func buildEcPoint(pubKey []byte) (*curves.EcPoint, error) {
 	crv := curves.K256()
 	x := new(big.Int).SetBytes(pubKey[1:33])
 	y := new(big.Int).SetBytes(pubKey[33:])
