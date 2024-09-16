@@ -1,14 +1,33 @@
-package builder
+package svc
 
 import (
 	"fmt"
 
-	"github.com/onsonr/sonr/internal/dwn/models"
+	"github.com/labstack/echo/v4"
+	oidc "github.com/onsonr/sonr/internal/dwn/models"
 )
 
-func GetDiscovery(origin string) *models.DiscoveryDocument {
-	baseURL := "https://" + origin // Ensure this is the correct base URL for your service
-	discoveryDoc := &models.DiscoveryDocument{
+func GrantAuthorization(e echo.Context) error {
+	// Implement authorization endpoint using passkey authentication
+	// Store session data in cache
+	return nil
+}
+
+func GetJWKS(e echo.Context) error {
+	// Implement token endpoint
+	// Use cached session data for validation
+	return nil
+}
+
+func GetToken(e echo.Context) error {
+	// Implement token endpoint
+	// Use cached session data for validation
+	return nil
+}
+
+func GetDiscovery(e echo.Context) error {
+	baseURL := "https://" + e.Request().Host // Ensure this is the correct base URL for your service
+	discoveryDoc := &oidc.DiscoveryDocument{
 		Issuer:                 baseURL,
 		AuthorizationEndpoint:  fmt.Sprintf("%s/auth", baseURL),
 		TokenEndpoint:          fmt.Sprintf("%s/token", baseURL),
@@ -23,5 +42,5 @@ func GetDiscovery(origin string) *models.DiscoveryDocument {
 		SubjectTypesSupported:  []string{"public"},
 		ClaimsSupported:        []string{"sub", "iss", "name", "email"},
 	}
-	return discoveryDoc
+	return e.JSON(200, discoveryDoc)
 }
