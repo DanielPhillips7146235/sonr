@@ -34,8 +34,8 @@ func (ms msgServer) AllocateVault(goCtx context.Context, msg *types.MsgAllocateV
 	// 1.Check if the service origin is valid
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// 2.Allocate the vault
-	cid, expiryBlock, err := ms.k.AssembleVault(ctx, msg.GetSubject(), msg.GetOrigin())
+	// 2.Allocate the vault msg.GetSubject(), msg.GetOrigin()
+	cid, expiryBlock, err := ms.k.AssembleVault(ctx)
 	if err != nil {
 		return nil, err
 	}

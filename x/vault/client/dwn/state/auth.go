@@ -8,16 +8,16 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func checkSubjectIsValid(e echo.Context) error {
+func CheckSubjectIsValid(e echo.Context) error {
 	credentialID := e.FormValue("credentialID")
 	return e.JSON(200, credentialID)
 }
 
-func handleCredentialAssertion(e echo.Context) error {
+func HandleCredentialAssertion(e echo.Context) error {
 	return e.JSON(200, "HandleCredentialAssertion")
 }
 
-func handleCredentialCreation(e echo.Context) error {
+func HandleCredentialCreation(e echo.Context) error {
 	// Get the serialized credential data from the form
 	credentialDataJSON := e.FormValue("credentialData")
 

@@ -15,20 +15,35 @@ import (
 	"github.com/labstack/echo/v4"
 	promise "github.com/nlepage/go-js-promise"
 	"github.com/onsonr/sonr/nebula/pages"
-	"github.com/onsonr/sonr/x/vault/client/htmx/middleware"
-	"github.com/onsonr/sonr/x/vault/client/htmx/state"
+	"github.com/onsonr/sonr/x/vault/client/dwn/middleware"
+	"github.com/onsonr/sonr/x/vault/client/dwn/state"
 )
 
 func main() {
 	e := echo.New()
 	e.Use(middleware.UseSession)
+	registerViews(e)
+	registerState(e)
+	Serve(e)
+}
+
+func registerState(e *echo.Echo) {
+	g := e.Group("state")
+	g.POST("/login/:identifier", state.HandleCredentialAssertion)
+	//	g.GET("/discovery", state.GetDiscovery)
+	g.GET("/jwks", state.GetJWKS)
+	g.GET("/token", state.GetToken)
+	g.POST("/:origin/grant/:subject", state.GrantAuthorization)
+	g.POST("/register/:subject", state.HandleCredentialCreation)
+	g.POST("/register/:subject/check", state.CheckSubjectIsValid)
+}
+
+func registerViews(e *echo.Echo) {
 	e.GET("/home", pages.Home)
 	e.GET("/login", pages.Login)
 	e.GET("/register", pages.Register)
 	e.GET("/profile", pages.Profile)
 	e.GET("/authorize", pages.Authorize)
-	state.RegisterHandlers(e)
-	Serve(e)
 }
 
 // Serve serves HTTP requests using handler or http.DefaultServeMux if handler is nil.
