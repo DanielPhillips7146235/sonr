@@ -1,4 +1,4 @@
-package vault
+package dwn
 
 import (
 	"bytes"
@@ -8,8 +8,6 @@ import (
 
 	"github.com/a-h/templ"
 	"github.com/ipfs/boxo/files"
-
-	"github.com/onsonr/sonr/pkg/dwn"
 )
 
 //go:embed app.wasm
@@ -28,7 +26,7 @@ var (
 )
 
 // NewVaultDirectory creates a new directory with the default files
-func NewVaultDirectory(cnfg *dwn.Config) (files.Node, error) {
+func NewVaultDirectory(cnfg *Config) (files.Node, error) {
 	dwnJSON, err := json.Marshal(cnfg)
 	if err != nil {
 		return nil, err
@@ -54,7 +52,7 @@ func NewVaultDirectory(cnfg *dwn.Config) (files.Node, error) {
 }
 
 // Use IndexHTML template to generate the index file
-func IndexHTMLFile(c *dwn.Config) (files.Node, error) {
+func IndexHTMLFile(c *Config) (files.Node, error) {
 	str, err := templ.JSONString(c)
 	if err != nil {
 		return nil, err
@@ -69,7 +67,7 @@ func IndexHTMLFile(c *dwn.Config) (files.Node, error) {
 }
 
 // MarshalConfigFile uses the config template to generate the dwn config file
-func MarshalConfigFile(c *dwn.Config) (files.Node, error) {
+func MarshalConfigFile(c *Config) (files.Node, error) {
 	dwnConfigData, err := json.Marshal(c)
 	if err != nil {
 		return nil, err
